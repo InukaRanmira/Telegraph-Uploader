@@ -29,7 +29,7 @@ DATABASE_URL = os.environ["DATABASE_URL"]
 db = Database(DATABASE_URL, "FnTelegraphBot")
 
 Bot = Client(
-    "Telegraph Uploader Bot",
+    "Telegraph Uploader Bot V2",
     bot_token = os.environ["BOT_TOKEN"],
     api_id = int(os.environ["API_ID"]),
     api_hash = os.environ["API_HASH"],
