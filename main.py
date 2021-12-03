@@ -1,9 +1,3 @@
-# Made with python3
-# (C) @FayasNoushad
-# Copyright permission under MIT License
-# All rights reserved by FayasNoushad
-# License -> https://github.com/FayasNoushad/Telegraph-Uploader-Bot-V2/blob/main/LICENSE
-
 import os
 import time
 import math
@@ -78,28 +72,34 @@ ABOUT_TEXT = """--**About Me**-- 😎
 FORCE_SUBSCRIBE_TEXT = "<code>Sorry Dear You Must Join My Updates Channel for using me 😌😉....</code>"
 
 START_BUTTONS = InlineKeyboardMarkup(
-        [[
-        InlineKeyboardButton('⚙ Help', callback_data='help'),
-        InlineKeyboardButton('About 🔰', callback_data='about'),
-        InlineKeyboardButton('Close ✖️', callback_data='close')
-        ]]
-    )
+    [
+	[
+            InlineKeyboardButton('⚙ Help', callback_data='help'),
+            InlineKeyboardButton('About 🔰', callback_data='about'),
+            InlineKeyboardButton('Close ✖️', callback_data='close')
+        ]
+    ]
+)
 
 HELP_BUTTONS = InlineKeyboardMarkup(
-        [[
-        InlineKeyboardButton('🏘 Home', callback_data='home'),
-        InlineKeyboardButton('About 🔰', callback_data='about'),
-        InlineKeyboardButton('Close ✖️', callback_data='close')
-        ]]
-    )
+    [
+	[
+            InlineKeyboardButton('🏘 Home', callback_data='home'),
+            InlineKeyboardButton('About 🔰', callback_data='about'),
+            InlineKeyboardButton('Close ✖️', callback_data='close')
+        ]
+    ]
+)
 
 ABOUT_BUTTONS = InlineKeyboardMarkup(
-        [[
-        InlineKeyboardButton('🏘 Home', callback_data='home'),
-        InlineKeyboardButton('Help ⚙', callback_data='help'),
-        InlineKeyboardButton('Close ✖️', callback_data='close')
-        ]]
-    )
+    [
+	[
+            InlineKeyboardButton('🏘 Home', callback_data='home'),
+            InlineKeyboardButton('Help ⚙', callback_data='help'),
+            InlineKeyboardButton('Close ✖️', callback_data='close')
+        ]
+    ]
+)
 
 
 async def send_msg(user_id, message):
@@ -121,32 +121,38 @@ async def send_msg(user_id, message):
 
 @Bot.on_callback_query()
 async def cb_handler(bot, update):
+    
     if update.data == "home":
         await update.message.edit_text(
             text=START_TEXT.format(update.from_user.mention),
             reply_markup=START_BUTTONS,
             disable_web_page_preview=True
         )
+    
     elif update.data == "help":
         await update.message.edit_text(
             text=HELP_TEXT,
             reply_markup=HELP_BUTTONS,
             disable_web_page_preview=True
         )
+    
     elif update.data == "about":
         await update.message.edit_text(
             text=ABOUT_TEXT.format((await bot.get_me()).username),
             reply_markup=ABOUT_BUTTONS,
             disable_web_page_preview=True
         )
+    
     else:
         await update.message.delete()
 
 
 @Bot.on_message(filters.private & filters.command(["start"]))
 async def start(bot, update):
+    
     if not await db.is_user_exist(update.from_user.id):
 	    await db.add_user(update.from_user.id)
+    
     await update.reply_text(
         text=START_TEXT.format(update.from_user.mention),
         disable_web_page_preview=True,
@@ -156,8 +162,10 @@ async def start(bot, update):
 
 @Bot.on_message(filters.private & filters.command(["help"]))
 async def help(bot, update):
+    
     if not await db.is_user_exist(update.from_user.id):
 	    await db.add_user(update.from_user.id)
+    
     await update.reply_text(
         text=HELP_TEXT,
       	disable_web_page_preview=True,
@@ -167,8 +175,10 @@ async def help(bot, update):
 
 @Bot.on_message(filters.private & filters.command(["about"]))
 async def about(bot, update):
+    
     if not await db.is_user_exist(update.from_user.id):
 	    await db.add_user(update.from_user.id)
+    
     await update.reply_text(
         text=ABOUT_TEXT.format((await bot.get_me()).username),
         disable_web_page_preview=True,
@@ -178,8 +188,10 @@ async def about(bot, update):
 
 @Bot.on_message(filters.media & filters.private)
 async def telegraph_upload(bot, update):
+    
     if not await db.is_user_exist(update.from_user.id):
 	    await db.add_user(update.from_user.id)
+    
     if UPDATE_CHANNEL:
         try:
             user = await bot.get_chat_member(UPDATE_CHANNEL, update.chat.id)
@@ -198,21 +210,20 @@ async def telegraph_upload(bot, update):
             print(error)
             await update.reply_text(text="Something wrong. Contact <a href='https://telegram.me/TheFayas'>Developer</a>.", disable_web_page_preview=True)
             return
-    medianame = "./DOWNLOADS/" + "FayasNoushad/FnTelegraphBot"
+    
     text = await update.reply_text(
         text="<code>Downloading to My Server ...</code>",
         disable_web_page_preview=True
     )
-    await bot.download_media(
-        message=update,
-        file_name=medianame
-    )
+    media = await update.download()
+    
     await text.edit_text(
         text="<code>Downloading Completed. Now I am Uploading to telegra.ph Link ...</code>",
         disable_web_page_preview=True
     )
+    
     try:
-        response = upload_file(medianame)
+        response = upload_file(media)
     except Exception as error:
         print(error)
         await text.edit_text(
@@ -220,11 +231,13 @@ async def telegraph_upload(bot, update):
             disable_web_page_preview=True
         )
         return
+    
     try:
-        os.remove(medianame)
+        os.remove(media)
     except Exception as error:
         print(error)
         return
+    
     await text.edit_text(
         text=f"<b>Link :-</b> <code>https://telegra.ph{response[0]}</code>\n\n<b>Join :-</b> @FayasNoushad",
         disable_web_page_preview=True,
