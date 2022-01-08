@@ -34,7 +34,7 @@ I am small media or file to telegra.ph link uploader bot.**
 
 >> `I can convert under 5MB photo or video to telegraph link.`
 
-Made by @FayasNoushad"""
+Made by @InukaRanmira"""
 
 HELP_TEXT = """**Hey, Follow these steps:**
 
@@ -47,21 +47,21 @@ HELP_TEXT = """**Hey, Follow these steps:**
 /start - Checking Bot Online
 /help - For more help
 /about - For more about me
-/status - For bot updates
+/stats - For bot updates
 
-Made by @FayasNoushad"""
+Made by @InukaRanmira"""
 
 ABOUT_TEXT = """--**About Me**-- 😎
 
-🤖 **Name :** [Telegraph Uploader](https://telegram.me/{})
+🤖 **Name :** [Telegraph Uploader](https://t.me/{})
 
-👨‍💻 **Developer :** [Fayas](https://github.com/FayasNoushad)
+👨‍💻 **Developer :** [Fayas](https://github.com/InukaRanmira)
 
-📢 **Channel :** [Fayas Noushad](https://telegram.me/FayasNoushad)
+📢 **Channel :** [SZ Bots](https://t.me/szteambots)
 
-👥 **Group :** [Developer Team](https://telegram.me/TheDeveloperTeam)
+👥 **Group :** [Support Group](https://t.me/slbotzone)
 
-🌐 **Source :** [👉 Click here](https://github.com/FayasNoushad/Telegraph-Uploader-Bot-V2)
+🌐 **Source :** [👉 Click here](https://github.com/InukaRanmira/Telegraph-Uploder)
 
 📝 **Language :** [Python3](https://python.org)
 
@@ -202,13 +202,13 @@ async def telegraph_upload(bot, update):
             await update.reply_text(
 		  text=FORCE_SUBSCRIBE_TEXT,
 		  reply_markup=InlineKeyboardMarkup(
-			  [[InlineKeyboardButton(text="⚙ Join Updates Channel ⚙", url=f"https://telegram.me/{UPDATE_CHANNEL}")]]
+			  [[InlineKeyboardButton(text="⚙ Join Updates Channel ⚙", url=f"https://t.me/szteambots")]]
 		  )
 	    )
             return
         except Exception as error:
             print(error)
-            await update.reply_text(text="Something wrong. Contact <a href='https://telegram.me/TheFayas'>Developer</a>.", disable_web_page_preview=True)
+            await update.reply_text(text="Something wrong. Contact <a href='https://t.me/InukaRanmira'>Developer</a>.", disable_web_page_preview=True)
             return
     
     text = await update.reply_text(
@@ -239,15 +239,15 @@ async def telegraph_upload(bot, update):
         return
     
     await text.edit_text(
-        text=f"<b>Link :-</b> <code>https://telegra.ph{response[0]}</code>\n\n<b>Join :-</b> @FayasNoushad",
+        text=f"<b>Link :-</b> <code>https://telegra.ph{response[0]}</code>\n\n<b>Join :-</b> @InukaRanmira",
         disable_web_page_preview=True,
         reply_markup=InlineKeyboardMarkup(
             [
                 [
                     InlineKeyboardButton(text="Open Link", url=f"https://telegra.ph{response[0]}"),
-                    InlineKeyboardButton(text="Share Link", url=f"https://telegram.me/share/url?url=https://telegra.ph{response[0]}")
+                    InlineKeyboardButton(text="Share Link", url=f"https://t.me/share/url?url=https://telegra.ph{response[0]}")
                 ],
-                [InlineKeyboardButton(text="⚙ Join Updates Channel ⚙", url="https://telegram.me/FayasNoushad")]
+                [InlineKeyboardButton(text="⚙ Join Updates Channel ⚙", url="https://t.me/szteambots")]
             ]
         )
     )
@@ -297,7 +297,7 @@ async def broadcast(bot, update):
 	os.remove('broadcast.txt')
 
 
-@Bot.on_message(filters.private & filters.command("status"), group=5)
+@Bot.on_message(filters.private & filters.command("stats"), group=5)
 async def status(bot, update):
     total_users = await db.total_users_count()
     text = "**Bot Status**\n"
