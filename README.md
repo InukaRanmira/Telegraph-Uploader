@@ -10,3 +10,6 @@ An advanced telegram media to telegraph uploader bot
 - `BOT_TOKEN` Your bot token from @BotFather
 - `BOT_OWNER` Bot owner ID
 - `DATABASE_URL` MongoDB URL
+
+### Deploy to Heroku
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/InukaRanmira/Telegraph-Uploder)
