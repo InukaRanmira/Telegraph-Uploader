@@ -1,46 +1,42 @@
 {
-    "name": "Telegraph Bot",
-    "description": "A bot that can upload photos and video to telegraph.",
-    "logo": "https://telegra.ph/file/df88cd27fc2221d3393be.jpg",
+    "name": "Telegraph Uploader",
+    "description": "Advance Telegraph Uploader Bot",
+    "logo": "https://telegra.ph/file/3d86d807a0aa3bb448669.jpg",
     "keywords": [
-        "Telegraph",
-        "Uploader",
-        "Telegram Bot",
+        "Telegraph Uploader",
+        "Mongo DB"
     ],
-    "website": "szbots.tech",
     "repository": "https://github.com/InukaRanmira/Telegraph-Uploder",
-    "success_url": "https://t.me/szteamBOTs",
+    "success_url": "https://t.me/InukaRanmira",
     "env": {
-        "BOT_TOKEN": {
-            "description": "Your Telegram Bot Token from @BotFather",
+        "API_ID": {
+            "description": "Your APP ID From my.telegram.org ",
             "value": ""
         },
         "API_HASH": {
-            "description": "Your API Hash from my.telegram.org",
+            "description": "Your API Hash From my.telegram.org ",
             "value": ""
         },
-        "APP_ID": {
-            "description": "Your APP ID from my.telegram.org",
+        "BOT_TOKEN": {
+            "description": "Your Bot Token From @BotFather",
             "value": ""
         },
         "BOT_OWNER": {
-            "description": "Bot owner ID (Don't Edit This)",
-            "value": "1696230986"
+            "description":"Add Your User ID"
         },
         "DATABASE_URL": {
-            "description": "MongoDB URL",
+            "description": "Your Mongo DB URL Obtained From mongodb.com",
             "value": ""
+        },
+        "DB_NAME":{ 
+               "description":"Your Mongo DB Database Name ",
+                "value": "my",
+                "required": false
+        }
     },
-    "addons": [],
     "buildpacks": [
         {
             "url": "heroku/python"
         }
-    ],
-    "formation": {
-        "worker": {
-            "quantity": 1,
-            "size": "free"
-        }
-    }
+    ]
 }
