@@ -6,7 +6,7 @@
         "Telegraph Uploader",
         "Mongo DB"
     ],
-    "repository": "https://github.com/InukaRanmira/Telegraph-Uploder",
+    "repository": "https://github.com/InukaRanmira/Telegraph-Uploader",
     "success_url": "https://t.me/InukaRanmira",
     "env": {
         "API_ID": {
