@@ -300,24 +300,13 @@ async def broadcast(bot, update):
 
 @Bot.on_message(filters.private & filters.command("stats"), group=5)
 async def status(bot, update):
-    total, used, free = shutil.disk_usage(".")
-    total = humanbytes(total)
-    used = humanbytes(used)
-    free = humanbytes(free)
-    cpu_usage = psutil.cpu_percent()
-    ram_usage = psutil.virtual_memory().percent
-    disk_usage = psutil.disk_usage('/').percent
     total_users = await db.total_users_count()
-    await m.reply_text(
-        text=f"**Total Disk Space:** {total} \n"
-             f"**Used Space:** {used}({disk_usage}%) \n"
-             f"**Free Space:** {free} \n"
-             f"**CPU Usage:** {cpu_usage}% \n"
-             f"**RAM Usage:** {ram_usage}%\n\n"
-             f"**Total Users in Database:** `{total_users}`",
-       parse_mode="Markdown",
-        quote=True
+    text = "**Bot Status**\n"
+    text += f"\n**Total Users:** `{total_users}`"
+    await update.reply_text(
+        text=text,
+        quote=True,
+        disable_web_page_preview=True
     )
-
 
 Bot.run()
