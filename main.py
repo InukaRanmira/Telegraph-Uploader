@@ -20,10 +20,10 @@ from database import Database
 UPDATE_CHANNEL = os.environ.get("UPDATE_CHANNEL", "")
 BOT_OWNER = int(os.environ["BOT_OWNER"])
 DATABASE_URL = os.environ["DATABASE_URL"]
-db = Database(DATABASE_URL, "FnTelegraphBot")
+db = Database(DATABASE_URL, "")
 
 Bot = Client(
-    "Telegraph Uploader Bot V2",
+    "Telegraph Uploader Bot",
     bot_token = os.environ["BOT_TOKEN"],
     api_id = int(os.environ["API_ID"]),
     api_hash = os.environ["API_HASH"],
@@ -55,7 +55,7 @@ ABOUT_TEXT = """--**About Me**-- 😎
 
 🤖 **Name :** [Telegraph Uploader](https://t.me/{})
 
-👨‍💻 **Developer :** [Fayas](https://github.com/InukaRanmira)
+👨‍💻 **Developer :** [Inuka](https://github.com/InukaRanmira)
 
 📢 **Channel :** [SZ Bots](https://t.me/szteambots)
 
@@ -212,13 +212,13 @@ async def telegraph_upload(bot, update):
             return
     
     text = await update.reply_text(
-        text="<code>Downloading to My Server ...</code>",
+        text="<code>Downloading to My Server.....</code>",
         disable_web_page_preview=True
     )
     media = await update.download()
     
     await text.edit_text(
-        text="<code>Downloading Completed. Now I am Uploading to telegra.ph Link ...</code>",
+        text="<code>Downloading Completed. Now I am Uploading Your Photo/Video To Telegraph.....</code>",
         disable_web_page_preview=True
     )
     
@@ -239,13 +239,14 @@ async def telegraph_upload(bot, update):
         return
     
     await text.edit_text(
-        text=f"<b>Link :-</b> <code>https://telegra.ph{response[0]}</code>\n\n<b>Join :-</b> @InukaRanmira",
+        text=f"<b>Link :-</b> <code>https://telegra.ph{response[0]}</code>\n\n<b>Join :-</b> @szteambots",
         disable_web_page_preview=True,
         reply_markup=InlineKeyboardMarkup(
             [
                 [
-                    InlineKeyboardButton(text="Open Link", url=f"https://telegra.ph{response[0]}"),
-                    InlineKeyboardButton(text="Share Link", url=f"https://t.me/share/url?url=https://telegra.ph{response[0]}")
+                    InlineKeyboardButton(text="Open Link🔗", url=f"https://telegra.ph{response[0]}"),
+                    InlineKeyboardButton(text="Share Link🎁", url=f"https://t.me/share/url?url=https://telegra.ph{response[0]}")
+		    InlineKeyboardButton(text="☘️Join With Us", url=f"https://t.me/szteambots")
                 ],
                 [InlineKeyboardButton(text="⚙ Join Updates Channel ⚙", url="https://t.me/szteambots")]
             ]
@@ -299,13 +300,23 @@ async def broadcast(bot, update):
 
 @Bot.on_message(filters.private & filters.command("stats"), group=5)
 async def status(bot, update):
+    total, used, free = shutil.disk_usage(".")
+    total = humanbytes(total)
+    used = humanbytes(used)
+    free = humanbytes(free)
+    cpu_usage = psutil.cpu_percent()
+    ram_usage = psutil.virtual_memory().percent
+    disk_usage = psutil.disk_usage('/').percent
     total_users = await db.total_users_count()
-    text = "**Bot Status**\n"
-    text += f"\n**Total Users:** `{total_users}`"
-    await update.reply_text(
-        text=text,
-        quote=True,
-        disable_web_page_preview=True
+    await m.reply_text(
+        text=f"**Total Disk Space:** {total} \n"
+             f"**Used Space:** {used}({disk_usage}%) \n"
+             f"**Free Space:** {free} \n"
+             f"**CPU Usage:** {cpu_usage}% \n"
+             f"**RAM Usage:** {ram_usage}%\n\n"
+             f"**Total Users in Database:** `{total_users}`",
+       parse_mode="Markdown",
+        quote=True
     )
 
 
